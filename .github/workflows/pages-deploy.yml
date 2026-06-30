@@ -1,4 +1,4 @@
-name: 构建与部署博客
+name: Build and Deploy Blog
 on:
   push:
     branches: [ main ]
@@ -10,19 +10,19 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 拉取仓库代码
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: 配置Ruby环境
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2"
           bundler-cache: true
-      - name: Jekyll编译网站
+      - name: Build Jekyll site
         run: bundle install && bundle exec jekyll build
-      - name: 上传静态页面产物
+      - name: Upload site files
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./_site
-      - name: 部署到GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
