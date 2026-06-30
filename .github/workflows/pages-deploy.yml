@@ -1,31 +1,25 @@
-name: Deploy Blog to GitHub Pages
+name: Build and Deploy Blog
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
 permissions:
-  contents: read
   pages: write
   id-token: write
-environment:
-  name: github-pages
-  url: ${{ steps.deployment.outputs.page_url }}
+  contents: read
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Ruby
+      - uses: actions/checkout@v4
+      - name: Setup Ruby & Build Jekyll
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: "3.2"
           bundler-cache: true
-      - name: Build site
-        run: bundle install && bundle exec jekyll build
-      - name: Upload artifact
+      - run: bundle exec jekyll build
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './_site'
-      - name: Deploy to GitHub Pages
-        id: deployment
+          path: _site
+      - name: Deploy Pages
         uses: actions/deploy-pages@v4
