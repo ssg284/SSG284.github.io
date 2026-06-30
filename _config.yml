@@ -1,0 +1,19 @@
+# 博客基础配置
+title: 我的个人博客
+author: SSG284
+description: 使用Jekyll搭建的GitHub Pages博客
+baseurl: ""
+url: "https://ssg284.github.io"
+
+# 文章布局
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+# 构建排除项
+exclude:
+  - Gemfile
+  - Gemfile.lock
